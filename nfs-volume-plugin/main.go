@@ -19,12 +19,13 @@ type nfsDriver struct {
 
 func (p *nfsDriver) Validate(req *volume.CreateRequest) error {
 
+	/*
 	_, deviceDefinedInOpts := req.Options["device"]
 
 	if !deviceDefinedInOpts {
 		return fmt.Errorf("device is required in driver_opts")
 	}
-
+	*/
 	return nil
 }
 
@@ -39,7 +40,18 @@ func (p *nfsDriver) MountOptions(req *volume.CreateRequest) []string {
 		nfsOptionsArray = append(nfsOptionsArray, strings.Split(p.defaultOptions, ",")...)
 	}
 	
-	return []string{"-t", "nfs", "-o", strings.Join(nfsOptionsArray, ","), req.Options["device"]}
+	//get device info, e.g. server:/share from env variable
+    var useDevice string
+	
+	_, deviceDefinedInOpts := req.Options["device"]
+
+	if !deviceDefinedInOpts {
+		useDevice = os.Getenv("DEFAULT_DEVICE")
+	} else {
+		useDevice = req.Options["device"]
+	}
+
+	return []string{"-t", "nfs", "-o", strings.Join(nfsOptionsArray, ","), useDevice}
 
 }
 

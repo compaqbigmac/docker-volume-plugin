@@ -12,18 +12,21 @@ This is a managed Docker volume plugin to allow Docker containers to access an N
 
 ## How to use
 
+
 In order to not make this a free-for-all, only the `device` option is recognized.  Any mount options need to be set up as part of the plugin.  Multiple copies of the plugin can co-exist with different options under different aliases.
 
 The plugin supports the following settings:
 
 * `DEFAULT_NFSOPTS` this corresponds to the default value `-o` parameter of the `mount` command.  It *will* be treated as a single string so it cannot inject the mount points or devices.
 
+* `DEFAULT_DEVICE` the default share where to mount e.g. server1:/share_name. PSC: Use this to define the path to the share at installation
+
 When installinng, it is *recommended* that a PLUGINALIAS is specified so that you would know what it is for and can easily control multiple copies of it.  This can be done in an automated fashion as:
 
     docker plugin install --alias PLUGINALIAS \
       trajano/nfs-volume-plugin \
       --grant-all-permissions --disable
-    docker plugin set PLUGINALIAS DEFAULT_NFSOPTS=hard,proto=tcp,nfsvers=4,intr
+    docker plugin set PLUGINALIAS DEFAULT_NFSOPTS=hard,proto=tcp,nfsvers=4,intr DEFAULT_DEVICE=server1:/share_name
     docker plugin enable PLUGINALIAS
 
 Example in docker-compose.yml:
@@ -31,9 +34,7 @@ Example in docker-compose.yml:
     volumes:
       sample:
         driver: PLUGINALIAS
-        driver_opts:
-          device: "server1:/share_name"
-        name: "whatever_name_you_want"
+        name: "volume_name"
 
 Which yields the following command
 

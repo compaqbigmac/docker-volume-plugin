@@ -12,6 +12,14 @@
                 "value"
             ],
             "value": ""
+        },
+        {
+            "name": "DEFAULT_DEVICE",
+            "description": "the share where to mount e.g. server1:/share_name",
+            "settable": [
+                "value"
+            ],
+            "value": ""
         }
     ],
     "network": {
