@@ -19,7 +19,7 @@ type nfsDriver struct {
 
 func (p *nfsDriver) Validate(req *volume.CreateRequest) error {
 
-	/*
+	/* remove check
 	_, deviceDefinedInOpts := req.Options["device"]
 
 	if !deviceDefinedInOpts {
