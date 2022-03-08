@@ -7,7 +7,7 @@ RUN ln -s /usr/lib/systemd/system/nfs-volume-plugin.service /etc/systemd/system/
     chmod 644 /usr/lib/systemd/system/nfs-volume-plugin.service && \
     chmod 700 /init.sh
 
-RUN /usr/local/go/bin/go get github.com/trajano/docker-volume-plugins/nfs-volume-plugin && \
+RUN /usr/local/go/bin/go get github.com/compaqbigmac/docker-volume-plugin/nfs-volume-plugin && \
     mv $HOME/go/bin/nfs-volume-plugin / && \
     rm -rf $HOME/go /usr/local/go && \
     yum remove -q -q -y git && \
